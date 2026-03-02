@@ -26,7 +26,14 @@ export default function TodosPage() {
         router.replace("/login");
         return;
       }
-      setUserEmail(session.user.email ?? "");
+      const meta = session.user.user_metadata;
+      setUserEmail(
+        session.user.email
+          || meta?.full_name
+          || meta?.name
+          || meta?.preferred_username
+          || "User"
+      );
       await loadTodos();
       setLoading(false);
     }
